@@ -1,6 +1,8 @@
 from sympy.mpmath import mp
 from Tkinter import *
 from colour import Color
+import time
+import math
 
 class piDraw:
     def __init__(self, size):
@@ -54,7 +56,7 @@ class piDraw:
         if self.size < 3:
             print('Invalid size, must be greater than 3')
             return -1
-        self.getPi(self.size+1)
+        self.getPi(self.size+2)
 
         master = Tk()
         size = radius*2+50
@@ -72,26 +74,30 @@ class piDraw:
             if count[i] != 0:
                 angles[i] = 36.0/count[i]
         count2 = [0 for _ in xrange(10)]
-        for line in coords:
+        start = time.time()
+        for line in coords[:-1]:
             count2 = self.drawLine(line, count2, angles, radius, w)
+        end = time.time()
+        print(end-start)
         mainloop()
 
     def drawLine(self,coord, count, angles, radius, canvas):
         p1,p2,color = coord
-        angle1 = float(mp.radians(36.0*p1+angles[p1]*count[p1]))
+        angle1 = math.radians(36.0*p1+angles[p1]*count[p1])
         count[p1] += 1
-        angle2 = float(mp.radians(36.0*p2+angles[p2]*count[p2]))
+        angle2 = math.radians(36.0*p2+angles[p2]*count[p2])
         if(count[p1] == 1):
-            x1 = (radius+10)*float(mp.cos(angle1))+radius+25
-            y1 = (radius+10)*float(mp.sin(angle1))+radius+25
+            x1 = (radius+10)*math.cos(angle1)+radius+25
+            y1 = (radius+10)*math.sin(angle1)+radius+25
             canvas.create_text(x1,y1, text=str(p1))
 
-        x1 = radius*float(mp.cos(angle1))+radius+25
-        y1 = radius*float(mp.sin(angle1))+radius+25
-        x2 = radius*float(mp.cos(angle2))+radius+25
-        y2 = radius*float(mp.sin(angle2))+radius+25
+        x1 = radius*math.cos(angle1)+radius+25
+        y1 = radius*math.sin(angle1)+radius+25
+        x2 = radius*math.cos(angle2)+radius+25
+        y2 = radius*math.sin(angle2)+radius+25
         canvas.create_line(x1,y1,x2,y2,fill=color)
         return count
-        
-pi = piDraw(1000)
+
+pi = piDraw(100000)
 pi.drawCircle()
+
