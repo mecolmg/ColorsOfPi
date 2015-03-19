@@ -51,7 +51,7 @@ class piDraw:
                                    fill=grid[r][c])
         mainloop()
     def drawCircle(self):
-        radius = 300
+        radius = 400
         self.restart()
         if self.size < 3:
             print('Invalid size, must be greater than 3')
