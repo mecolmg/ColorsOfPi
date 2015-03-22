@@ -20,6 +20,8 @@ class piDraw:
     def getPi(self, size):
         mp.dps = size
         self.pi = str(mp.pi/10)[2:]
+    def setSize(self, size):
+        self.size = size
     def makeGrid(self):
         self.restart()
         self.size = self.size + (self.size+1)%2
@@ -97,7 +99,3 @@ class piDraw:
         y2 = radius*math.sin(angle2)+radius+25
         canvas.create_line(x1,y1,x2,y2,fill=color)
         return count
-
-pi = piDraw(100000)
-pi.drawCircle()
-
